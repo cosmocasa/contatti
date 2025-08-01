@@ -1,0 +1,70 @@
+/* Stili generali */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+/* Stili per la pagina principale */
+.jumbotron {
+    padding: 2rem 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.3rem;
+}
+
+/* Stili per il form */
+.form-label {
+    font-weight: 500;
+}
+
+/* Stili per la tabella contatti */
+.table th {
+    font-weight: 600;
+}
+
+.badge {
+    font-size: 0.85rem;
+}
+
+/* Stili per i pulsanti */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Stili per il modal */
+.modal-header {
+    background-color: #f8f9fa;
+}
+
+.contact-detail-row {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.contact-detail-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Stili per i filtri */
+.card-header {
+    background-color: #f1f3f5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+    
+    .btn-sm {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.7rem;
+    }
+} 

@@ -49,13 +49,38 @@ Per accedere al sistema, utilizza le seguenti credenziali:
 - Username: `Cosmocontatti`
 - Password: `XcosmoContatti299!`
 
+## Deploy su Vercel
+
+Questa applicazione è configurata per essere facilmente deployata su Vercel:
+
+1. Crea un account su [Vercel](https://vercel.com) se non ne hai già uno
+2. Installa la CLI di Vercel:
+   ```
+   npm i -g vercel
+   ```
+3. Esegui il login da terminale:
+   ```
+   vercel login
+   ```
+4. Dalla directory del progetto, esegui:
+   ```
+   vercel
+   ```
+5. Segui le istruzioni a schermo per completare il deploy
+
+Alternativamente, puoi collegare il tuo repository GitHub direttamente a Vercel:
+1. Vai su [Vercel Dashboard](https://vercel.com/dashboard)
+2. Clicca su "New Project"
+3. Importa il tuo repository GitHub
+4. Configura il progetto e clicca su "Deploy"
+
 ## Struttura del Progetto
 
 ```
 contatti-chiamate/
 ├── app.js                  # File principale dell'applicazione
 ├── package.json            # Configurazione NPM
-├── database.db             # Database SQLite
+├── vercel.json             # Configurazione per Vercel
 ├── public/                 # File statici
 │   ├── css/                # Fogli di stile
 │   │   └── style.css       # Stili personalizzati

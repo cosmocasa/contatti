@@ -4,6 +4,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const session = require('express-session');
 const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
 
 // Importo le rotte di autenticazione
 const { router: authRoutes, isAuthenticated } = require('./routes/auth');
@@ -12,6 +13,9 @@ const { router: authRoutes, isAuthenticated } = require('./routes/auth');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configurazione per proxy
+app.set('trust proxy', 1);
+
 // Configurazione del motore di template EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +23,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configurazione della sessione
@@ -27,7 +32,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: { 
-    secure: process.env.NODE_ENV === 'production', 
+    secure: false, // Impostiamo su false anche in produzione per evitare problemi
     maxAge: 24 * 60 * 60 * 1000 // 24 ore
   }
 }));
@@ -42,8 +47,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// Determina il percorso del database in base all'ambiente
+const dbPath = process.env.NODE_ENV === 'production' 
+  ? path.join('/tmp', 'database.db')  // Usa /tmp per Render
+  : './database.db';
+
 // Inizializzazione del database
-const db = new sqlite3.Database('./database.db', (err) => {
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Errore nella connessione al database:', err.message);
   } else {
@@ -156,6 +166,17 @@ app.get('/contatti', isAuthenticated, (req, res) => {
       contatti: rows,
       filters: { search, tipo, date }
     });
+  });
+});
+
+// Aggiungi una rotta di debug per verificare lo stato della sessione
+app.get('/debug-session', (req, res) => {
+  res.json({
+    sessionID: req.sessionID,
+    isAuthenticated: req.session.isAuthenticated || false,
+    user: req.session.user || null,
+    cookies: req.cookies,
+    sessionCookie: req.session.cookie
   });
 });
 

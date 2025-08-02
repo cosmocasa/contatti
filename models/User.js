@@ -1,6 +1,13 @@
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
-const db = new sqlite3.Database('./database.db');
+const path = require('path');
+
+// Determina il percorso del database in base all'ambiente
+const dbPath = process.env.NODE_ENV === 'production' 
+  ? path.join('/tmp', 'database.db')  // Usa /tmp per Render
+  : './database.db';
+
+const db = new sqlite3.Database(dbPath);
 
 // Creazione della tabella utenti se non esiste
 db.run(`CREATE TABLE IF NOT EXISTS users (

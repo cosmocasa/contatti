@@ -1,6 +1,6 @@
 # CRM Immobiliare - Gestione Contatti Chiamate
 
-Un sistema CRM per la gestione dei contatti telefonici per agenzie immobiliari. Permette di registrare e gestire le chiamate dei potenziali clienti. I dati vengono salvati su Google Sheets.
+Un sistema CRM per la gestione dei contatti telefonici per agenzie immobiliari. Permette di registrare e gestire le chiamate dei potenziali clienti. I dati vengono salvati su Google Sheets. L'applicazione può essere eseguita come applicazione web o come applicazione desktop Windows.
 
 ## Funzionalità
 
@@ -10,6 +10,7 @@ Un sistema CRM per la gestione dei contatti telefonici per agenzie immobiliari. 
 - Visualizzazione della lista dei contatti
 - Filtri di ricerca per nome, cognome, numero di telefono, tipo di ricerca e data
 - Visualizzazione dettagli completi di ogni contatto
+- Disponibile come applicazione web o applicazione desktop Windows
 
 ## Requisiti di Sistema
 
@@ -43,21 +44,51 @@ npm install
 
 4. Configura le credenziali Google Sheets nel file `config.js`
 
-## Avvio dell'Applicazione
+## Avvio dell'Applicazione Web
 
-Per avviare l'applicazione in modalità sviluppo:
+Per avviare l'applicazione web in modalità sviluppo:
 
 ```
 npm run dev
 ```
 
-Per avviare l'applicazione in modalità produzione:
+Per avviare l'applicazione web in modalità produzione:
 
 ```
 npm start
 ```
 
 L'applicazione sarà disponibile all'indirizzo `http://localhost:3000`
+
+## Avvio dell'Applicazione Desktop
+
+Per avviare l'applicazione desktop in modalità sviluppo:
+
+```
+npm run electron:dev
+```
+
+Per avviare l'applicazione desktop in modalità normale:
+
+```
+npm run electron
+```
+
+## Creazione dell'Eseguibile Windows
+
+Per creare un eseguibile Windows dell'applicazione:
+
+```
+npm run build
+```
+
+Questo creerà un installer nella cartella `dist` che può essere distribuito e installato su qualsiasi computer Windows.
+
+Per creare una versione portable (senza installer):
+
+```
+npm run build:dir
+```
 
 ## Accesso al Sistema
 
@@ -97,16 +128,18 @@ Alternativamente, puoi collegare il tuo repository GitHub direttamente a Vercel:
 
 ```
 contatti-chiamate/
-├── app.js                  # File principale dell'applicazione
+├── app.js                  # File principale dell'applicazione web
+├── electron.js             # File principale dell'applicazione desktop
 ├── package.json            # Configurazione NPM
 ├── config.js               # Configurazione dell'applicazione e Google Sheets
 ├── vercel.json             # Configurazione per Vercel
 ├── public/                 # File statici
 │   ├── css/                # Fogli di stile
 │   │   └── style.css       # Stili personalizzati
-│   └── js/                 # JavaScript client
-│       ├── main.js         # Script principale
-│       └── contacts.js     # Script per la gestione dei contatti
+│   ├── js/                 # JavaScript client
+│   │   ├── main.js         # Script principale
+│   │   └── contacts.js     # Script per la gestione dei contatti
+│   └── favicon.ico         # Icona dell'applicazione
 ├── models/                 # Modelli di dati
 │   ├── User.js             # Modello per gli utenti
 │   └── GoogleSheetsService.js # Servizio per interagire con Google Sheets
@@ -137,4 +170,5 @@ contatti-chiamate/
 - Bootstrap 5 per l'interfaccia utente
 - JavaScript per le funzionalità client-side
 - Express-session per la gestione delle sessioni
-- Bcryptjs per la crittografia delle password 
+- Bcryptjs per la crittografia delle password
+- Electron per la creazione dell'applicazione desktop 

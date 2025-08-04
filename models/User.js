@@ -1,29 +1,24 @@
-const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
-const path = require('path');
+const config = require('../config');
 
-// Determina il percorso del database in base all'ambiente
-const isVercel = process.env.VERCEL === '1';
-const dbPath = isVercel 
-  ? ':memory:'
-  : process.env.NODE_ENV === 'production' 
-    ? path.join('/tmp', 'database.db')
-    : './database.db';
-
-const db = new sqlite3.Database(dbPath);
+// Utente predefinito
+const defaultUser = {
+  id: 1,
+  username: config.app.defaultUser.username,
+  password: bcrypt.hashSync(config.app.defaultUser.password, 10),
+  created_at: new Date().toISOString()
+};
 
 // Funzioni per la gestione degli utenti
 const User = {
   // Trova un utente per username
   findByUsername: (username) => {
     return new Promise((resolve, reject) => {
-      db.get('SELECT * FROM users WHERE username = ?', [username], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
+      if (username.toLowerCase() === defaultUser.username.toLowerCase()) {
+        resolve(defaultUser);
+      } else {
+        resolve(null);
+      }
     });
   },
   
